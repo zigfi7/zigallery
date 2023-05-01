@@ -1,0 +1,7 @@
+{
+  "title": "Zig Gallery",
+  "port": 8087,
+  "imageFolder": "/srv/http/img",
+  "imageExtensions": [".jpg", ".jpeg", ".png", ".gif"],
+  "max_thumb_size": 250
+}

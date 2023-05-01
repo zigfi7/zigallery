@@ -1,0 +1,10 @@
+[Unit]
+Description=Zig image server
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/nodejs/images
+ExecStart=/bin/node ./images.js
+
+[Install]
+WantedBy=multi-user.target
