@@ -1,0 +1,28 @@
+html
+  head
+    title= title
+    style.
+      body {
+        background-color: #1a002d;
+      }
+      
+      h1, h2, h3 {
+        text-align: center;
+        color: #af79df;
+      }
+
+      img {
+        display: inline-block;
+        max-width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        border: 0px solid #ccc;
+        margin: 1px;
+      }
+  body
+    h1=title
+    main
+      each image in images
+        if image.thumbUrl
+          a(href=image.fullImageUrl, target="_blank")
+            img(src=image.thumbUrl, alt=image.imageUrl)
