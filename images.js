@@ -1,15 +1,17 @@
 #!/bin/nodemon
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
+const path = require('path'); 
 const sharp = require('sharp');
 const app = express();
 
 let IMAGE_FOLDER = 'img/';
-let IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
+let IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif"];
 let LISTEN_PORT = 3000;
-let TITLE = 'Default Title';
+let TITLE = 'ZiGallery';
 let MAX_THUMB_SIZE = 250;
+let DATE_SUBDIR = false;
+let PUG_RENDER='gallery'
 
 try {
   const config = JSON.parse(fs.readFileSync('config.json'));
@@ -18,20 +20,26 @@ try {
   LISTEN_PORT = config.port ?? LISTEN_PORT;
   TITLE = config.title ?? TITLE;
   MAX_THUMB_SIZE = config.max_thumb_size ?? MAX_THUMB_SIZE;
+  DATE_SUBDIR = config.date_subfolder ?? DATE_SUBDIR;
+  PUG_RENDER = config.pug ?? PUG_RENDER;
+
 } catch (err) {
   console.error(err);
 }
 
 function getImageFolder() {
-//  const date = new Date();
-//  const year = date.getFullYear();
-//  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-//  const day = date.getDate().toString().padStart(2, '0');
-//  const folder = `${IMAGE_FOLDER}${year}-${month}-${day}/`;
-  const folder = `${IMAGE_FOLDER}`;
+  folder = `${IMAGE_FOLDER}/`;
+  if (DATE_SUBDIR) {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    folder = `${IMAGE_FOLDER}${year}-${month}-${day}/`;
+  } else {
+    folder = `${IMAGE_FOLDER}/`;
+  }
   return folder;
 }
-
 
 app.set('view engine', 'pug');
 
@@ -45,7 +53,7 @@ app.get('/', async (req, res) => {
       const fileName = path.basename(image);
       return { thumbUrl, imageUrl, fullImageUrl, fileName };
     });
-    res.render('gallery', { title: TITLE, images: virtualImages });
+    res.render(PUG_RENDER, { title: TITLE, images: virtualImages });
   } catch (err) {
     console.error(err);
     res.status(500).send('Error loading gallery');
@@ -79,7 +87,6 @@ function getImagesFromDir(dirPath) {
     });
   });
 }
-
 
 app.get('/thumb-image', async (req, res) => {
   try {

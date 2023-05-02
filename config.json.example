@@ -1,7 +1,9 @@
 {
   "title": "Zig Gallery",
   "port": 8087,
+  "pug": "gallery5",
   "imageFolder": "/srv/http/img",
-  "imageExtensions": [".jpg", ".jpeg", ".png", ".gif"],
-  "max_thumb_size": 250
+  "date_subfolder":false,
+  "imageExtensions": [".jpg", ".jpeg", ".png", ".webp", ".gif"],
+  "max_thumb_size": 175
 }
