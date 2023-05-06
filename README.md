@@ -13,3 +13,12 @@ I have explored different options such as dynamic file rotation and reading vari
 
 If anyone would like to provide feedback or collaborate on this gallery, I am open to suggestions.
 
+
+
+To use the gallery.js node script, follow these simple installation steps:
+
+1)  Clone the repository to your local machine.
+2)  Navigate to the folder where the script is located.
+3)  Run npm install to install the required dependencies.
+4)  Create a config file based on the provided example (copy it and edit it) to specify the root image folder location. You may also want to change the serving port.
+5)  Run node images.js to start the script.
